@@ -63,13 +63,13 @@ void ofxOscRecorder::update(){
 		int index = lastPlayedIndex;
 		while(!done){
 
-			index++;
-			if(index >= times.size()){
-				done = true; continue;
-			}
 			if(times[index] < playbackTime){
 				ofNotifyEvent(eventOscPlayback, messages[index]);
 			}else{
+				done = true; continue;
+			}
+			index++;
+			if(index >= times.size()){
 				done = true; continue;
 			}
 		}
@@ -112,13 +112,14 @@ ofxJSON ofxOscRecorder::toJson(ofxOscMessage & m){
 			case OFXOSC_TYPE_DOUBLE: arg["value"] = m.getArgAsDouble(i); break;
 			case OFXOSC_TYPE_STRING: arg["value"] = m.getArgAsString(i); break;
 			case OFXOSC_TYPE_SYMBOL: arg["value"] = m.getArgAsSymbol(i); break;
-			case OFXOSC_TYPE_CHAR: arg["value"] = m.getArgAsChar(i); break;
+			case OFXOSC_TYPE_CHAR: arg["value"] = char(m.getArgAsChar(i)); break;
 			case OFXOSC_TYPE_MIDI_MESSAGE: arg["value"] = m.getArgAsMidiMessage(i); break;
 			case OFXOSC_TYPE_TRUE: arg["value"] = m.getArgAsBool(i); break;
 			case OFXOSC_TYPE_FALSE: arg["value"] = m.getArgAsBool(i); break;
 			case OFXOSC_TYPE_TRIGGER: arg["value"] = m.getArgAsTrigger(i); break;
 			case OFXOSC_TYPE_TIMETAG: arg["value"] = m.getArgAsTimetag(i); break;
 			case OFXOSC_TYPE_RGBA_COLOR: arg["value"] = m.getArgAsRgbaColor(i); break;
+			default: ofLogError("ofxOscRecorder") << "type not supported!";
 		}
 		args.append(arg);
 	}
@@ -155,6 +156,7 @@ ofxOscMessage ofxOscRecorder::toOSC(const ofxJSON & json){
 			case OFXOSC_TYPE_TRIGGER: m.addBoolArg(arg["value"].asBool()); break;
 			case OFXOSC_TYPE_TIMETAG:  m.addInt64Arg(arg["value"].asInt64()); break;
 			case OFXOSC_TYPE_RGBA_COLOR: m.addIntArg(arg["value"].asInt()); break;
+			default: ofLogError("ofxOscRecorder") << "type not supported!";
 		}
 	}
 	return m;
