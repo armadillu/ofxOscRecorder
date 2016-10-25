@@ -80,7 +80,7 @@ void ofxOscRecorder::update(){
 			if(loopPlayback){
 				playbackStartTime = ofGetElapsedTimef();
 				lastPlayedIndex = 0;
-				ofLogNotice("ofxOscRecorder") << "looping!";
+				ofLogVerbose("ofxOscRecorder") << "looping!";
 			}else{
 				isPlayback = false;
 				ofNotifyEvent(eventPlaybackFinished, *this);
