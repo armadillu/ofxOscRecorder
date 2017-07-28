@@ -1,4 +1,4 @@
 ofxJSON
 ofxTimeMeasurements
 ofxOSC
-ofxOSCRecorder
+ofxOscRecorder
