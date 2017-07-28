@@ -1,3 +1,4 @@
 ofxJSON
 ofxTimeMeasurements
 ofxOSC
+ofxOSCRecorder
